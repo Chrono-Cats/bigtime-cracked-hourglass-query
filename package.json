@@ -1,0 +1,22 @@
+{
+  "type": "module",
+  "name": "cracked-hourglass-query",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.6.8",
+    "chalk": "^5.3.0",
+    "cycletls": "^1.0.26",
+    "dayjs": "^1.11.11",
+    "dotenv": "^16.4.5",
+    "form-data": "^4.0.0",
+    "ora": "^8.0.1"
+  }
+}
