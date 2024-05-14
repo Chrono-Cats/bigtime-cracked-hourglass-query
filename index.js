@@ -122,7 +122,9 @@ async function main() {
           space.isDueBeforeNextIssue()
             ? chalk.strikethrough.red(space.issueId)
             : space.issueId
-        }\t${space.name}\t${space.nextIssueTime.format('MM-DD HH:mm:ss')}`
+        }\t${space.name}\t${space.nextIssueTime.format(
+          'MM-DD HH:mm:ss'
+        )}\t${chalk.red(space.remainTime)}`
       )
     }
   })
