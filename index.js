@@ -4,25 +4,14 @@ import Space from './classes/Space.js'
 import {
   cooldownMapping,
   spaceTypes,
-  firebaseConfig,
   httpRequestOptions,
 } from './variables.js'
+import Database from './classes/Database.js'
+import ora from 'ora'
 import chalk from 'chalk'
-import { initializeApp } from 'firebase/app'
-import {
-  getFirestore,
-  collection,
-  doc,
-  addDoc,
-  setDoc,
-  query,
-  where,
-  getDocs,
-} from 'firebase/firestore'
 
 const cycleTLS = await initCycleTLS()
-const app = initializeApp(firebaseConfig)
-const db = getFirestore(app)
+const db = new Database()
 
 async function getRentedSpaces() {
   let currentPage = 1,
@@ -129,11 +118,15 @@ async function main() {
   })
 
   let latestSpace = sortedSpaces[sortedSpaces.length - 1]
-  const firebasePromises = sortedSpaces.map((space) =>
-    createOrUpdateSpace(space)
-  )
-  console.log('Updating Firebase...')
-  await Promise.all(firebasePromises)
+
+  let spinner = ora('雲端資料庫更新中...').start();
+  try {
+    await db.batchWrite(sortedSpaces)
+    spinner.succeed('雲端資料庫更新完成.')
+  } catch (err) {
+    spinner.fail('雲端資料庫更新失敗!')
+    // console.error(err)
+  }
 
   console.log(
     `建立行事曆: https://calendar.google.com/calendar/render?action=TEMPLATE&text=收菜&details=id+${
@@ -146,10 +139,6 @@ async function main() {
   )
 
   process.exit(0)
-}
-
-async function createOrUpdateSpace(space) {
-  // return await setDoc(doc(db, 'spaces', space.id), space.getDataForFirebase())
 }
 
 main()
