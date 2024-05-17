@@ -1,3 +1,5 @@
+import 'dotenv/config'
+
 const cooldownMapping = {
   BT0_space_rare_small_0: 72,
   BT0_space_rare_medium_0: 66,
@@ -18,4 +20,25 @@ const cooldownMapping = {
 
 const spaceTypes = Object.keys(cooldownMapping)
 
-export { cooldownMapping, spaceTypes }
+const firebaseConfig = {
+  apiKey: process.env.FIRE_BASE_APIKEY,
+  authDomain: `${process.env.FIRE_BASE_PROJECT_ID}.firebaseapp.com`,
+  projectId: process.env.FIRE_BASE_PROJECT_ID,
+  storageBucket: `${process.env.FIRE_BASE_PROJECT_ID}.appspot.com`,
+  messagingSenderId: process.env.FIRE_BASE_SENDER_ID,
+  appId: process.env.FIRE_BASE_ID,
+}
+
+const httpRequestOptions = {
+  userAgent:
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36',
+  headers: {
+    authority: 'api.openloot.com',
+    accept: '*/*',
+    Cookie: process.env.COOKIE,
+    'X-Device-Id': process.env.DEVICE_ID,
+    'X-Session-Id': process.env.SESSION_ID,
+  },
+}
+
+export { cooldownMapping, spaceTypes, firebaseConfig, httpRequestOptions }

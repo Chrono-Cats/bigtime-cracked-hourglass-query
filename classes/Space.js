@@ -58,6 +58,18 @@ class Space {
     }
     return result
   }
+
+  getDataForFirebase() {
+    return {
+      id: this.id,
+      issueId: this.issueId,
+      type: this.type,
+      name: this.name,
+      lastIssueTime: this.lastIssueTime.toISOString(),
+      dueDate: this.dueDate.toISOString(),
+      nextIssueTime: this.nextIssueTime.toISOString(),
+    }
+  }
 }
 
 export default Space
